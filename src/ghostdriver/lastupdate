@@ -1,7 +1,7 @@
-2013-07-25 23:22:39
+2014-01-12 21:02:05
 
-commit e3c255e66f99fd34fbf03269b8dc44bafdda940a (HEAD, refs/remotes/origin/master, refs/remotes/origin/HEAD, refs/heads/master)
+commit 24452f72b6daa0a8ba14822172012d781c89fbcb (HEAD, tag: refs/tags/1.1.1, refs/heads/master)
 Author: Ivan De Marino <detronizator@gmail.com>
-Date:   Thu Jul 25 00:21:44 2013 +0100
+Date:   Sun Jan 12 20:37:01 2014 +0000
 
-    Log "page.onError".
+    Changing only the Driver (no need for the Java Bindings) to 1.1.1

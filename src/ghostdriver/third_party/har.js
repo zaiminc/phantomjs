@@ -30,7 +30,9 @@ exports.createHar = function (page, resources) {
         var request = resource.request,
             startReply = resource.startReply,
             endReply = resource.endReply,
-            error = resource.error;
+            error = resource.error,
+            postData = {},
+            i;
 
         if (!request) {
             return;
@@ -40,6 +42,18 @@ exports.createHar = function (page, resources) {
         // they aren't included in specification
         if (request.url.match(/(^data:image\/.*)/i)) {
             return;
+        }
+
+        if (request.postData) {
+            for (i = request.headers.length - 1; i >= 0; --i) {
+                if (request.headers[i]["name"] == "Content-Type") {
+                    postData = {
+                        mimeType: request.headers[i]["value"],
+                        text: request.postData
+                    };
+                    break;
+                }
+            }
         }
 
         if (error) {
@@ -81,7 +95,8 @@ exports.createHar = function (page, resources) {
                     headers: request.headers,
                     queryString: [],
                     headersSize: -1,
-                    bodySize: -1
+                    bodySize: -1,
+                    postData: postData
                 },
                 response: {
                     status: error ? null : endReply.status,
@@ -121,7 +136,8 @@ exports.createHar = function (page, resources) {
                     headers: request.headers,
                     queryString: [],
                     headersSize: -1,
-                    bodySize: -1
+                    bodySize: -1,
+                    postData: postData
                 },
                 response: {
                     status: null,

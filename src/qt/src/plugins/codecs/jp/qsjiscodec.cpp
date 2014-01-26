@@ -222,7 +222,8 @@ QList<QByteArray> QSjisCodec::_aliases()
     QList<QByteArray> list;
     list << "SJIS" // Qt 3 compat
          << "MS_Kanji"
-         << "x-sjis";
+         << "x-sjis"
+         << "windows-31j";
     return list;
 }
 #endif // QT_NO_TEXTCODEC

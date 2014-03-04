@@ -101,7 +101,8 @@ ghostdriver.Session = function(desiredCapabilities) {
     },
     _windows = {},  //< NOTE: windows are "webpage" in Phantom-dialect
     _currentWindowHandle = null,
-    _cookieJar = require('cookiejar').create(),
+    _cookiePath = "",
+    _cookieJar = null,
     _id = require("./third_party/uuid.js").v1(),
     _inputs = ghostdriver.Inputs(),
     _capsPageSettingsPref = "phantomjs.page.settings.",
@@ -110,6 +111,12 @@ ghostdriver.Session = function(desiredCapabilities) {
     _pageCustomHeaders = {},
     _log = ghostdriver.logger.create("Session [" + _id + "]"),
     k, settingKey, headerKey;
+
+    if ('phantomjs.cookies.path' in desiredCapabilities) {
+        _cookiePath = desiredCapabilities['phantomjs.cookies.path'];
+        _negotiatedCapabilities['phantomjs.cookies.path'] = _cookiePath;
+    }
+    _cookieJar = require('cookiejar').create(_cookiePath);
 
     // Searching for `phantomjs.settings.* and phantomjs.customHeaders.*` in the Desired Capabilities and merging with the Negotiated Capabilities
     // Possible values for settings: @see https://github.com/ariya/phantomjs/wiki/API-Reference#wiki-webpage-settings.

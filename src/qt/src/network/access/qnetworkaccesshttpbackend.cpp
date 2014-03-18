@@ -518,7 +518,13 @@ void QNetworkAccessHttpBackend::postRequest()
                              QNetworkRequest::Automatic).toInt()) == QNetworkRequest::Manual)
         httpRequest.setWithCredentials(false);
 
-
+    qDebug() << "postRequest(): dump headers";
+    QList<QPair<QByteArray, QByteArray> > httpHeaders = httpRequest.header();
+    for (int i = 0; i < httpHeaders.size(); i++) {
+        QPair<QByteArray, QByteArray> header = httpHeaders.at(i);
+        qDebug() << header.first << ": " << header.second;
+    }
+ 
     // Create the HTTP thread delegate
     QHttpThreadDelegate *delegate = new QHttpThreadDelegate;
 #ifndef QT_NO_BEARERMANAGEMENT
